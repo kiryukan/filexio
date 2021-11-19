@@ -1,0 +1,20 @@
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">{{ modalName }}</h4>
+        <button type="button" class="close-btn" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">X</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <app-signin-form #signin *ngIf="isToSign" (dataUsername)="emitUsername($event)" (closeModal)="emitClose($event)"></app-signin-form>
+        <app-signup-form #signup *ngIf="isToCreate"></app-signup-form>
+        <app-create-folder-form #createFolder *ngIf="toCreateFolder" (reloadData)="emitReloadData($event)" (closeModal)="emitClose($event)"></app-create-folder-form>
+        {{ dataUsername }}
+    </div>
+    <div class="modal-footer">
+        <!--<button class="btn btn-success" type="submit" (click)="loginForm.ngSubmit.emit(); isAuth && modal.dismiss('Cancel click')">SUBMIT</button>
+        <button type="button" class="btn btn-danger" (click)="modal.dismiss('Cancel click')">CANCEL</button>-->
+        <!--<button class="btn btn-success" type="submit" (click)="onSubmit()">SUBMIT</button>-->
+        <!--<button type="button" class="btn btn-danger" (click)="modal.dismiss('Cancel click')">CANCEL</button>-->
+    </div>
+</ng-template>

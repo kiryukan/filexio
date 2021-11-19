@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+@import '../node_modules/bootstrap-icons/font/bootstrap-icons';
+html {
+  background-color: #e9e0ef;
+  background-image: -webkit-linear-gradient(30deg, #e9e0ef 50%, #e4c2f1 50%);
+}
+

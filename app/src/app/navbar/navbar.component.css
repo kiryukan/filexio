@@ -1,0 +1,20 @@
+.navbar{
+  box-shadow: 5px 5px 5px grey;
+  background-color: #984FF1;
+}
+
+.dropdown-toggle{
+  color: white !important;
+}
+
+.dropdown-menu{
+  background-color: #984ff1;
+}
+
+.dropdown-item{
+  color: white;
+}
+
+.dropdown-item:hover{
+  color: #984ff1;
+}

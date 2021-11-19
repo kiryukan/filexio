@@ -1,0 +1,21 @@
+.home-container {
+  background-color: rgba(0,0,0,0);
+  text-align: center;
+  margin-top: 100px;
+}
+
+@keyframes fade {
+  From {
+  Opacity : 0 ;
+  }
+  To {
+  Opacity : 1 ;
+  }
+  }
+
+svg{
+  Animation-name : fade ;
+  /*Animation-delay : 2s ;*/
+  Animation-duration : 5s ;
+  Animation-iteration-count : 1 ;
+}

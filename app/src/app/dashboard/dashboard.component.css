@@ -1,0 +1,133 @@
+.dashboard-container{
+  background-color: rgba(0,0,0,0);
+}
+
+.dashboard-content{
+  margin-bottom: 50px;
+  border-radius: 20px;
+  padding: 30px;
+  /*background-color: rgb(105, 57, 163, 0.7);*/
+  background-color: rgb(242, 242, 242, 0.3);
+}
+
+
+.bi{
+  margin-left: 10px;
+}
+
+.dashboard-menu{
+  margin-top: 10px;
+  /*background-color: white;
+  padding: 10px;
+  border: 5px solid #D8D8D8;
+  border-radius: 20px;*/
+}
+
+.dashboard-menu ul{
+  list-style-type: none;
+  font-size: 1.5em;;
+}
+
+/* upload button styling */
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background-color: #F5E9BB;
+  border-radius: 10px;
+  box-shadow: 3px 3px 3px #ccc;
+}
+
+tbody{
+  background-color: rgb(105, 57, 163, 0.7);
+  color: #fff;
+  opacity: 0.9;
+}
+
+/* rename pointer change for link, svg */
+.span-link, .rename-svg, .rename-svg-ok, .rename-svg-cancel{
+  cursor: pointer;
+}
+
+/* rename input style */
+#input-rename{
+  color: rgb(105, 57, 163, 0.7);
+  border: none;
+  border-radius: 5px;
+}
+
+.rename-svg-ok:hover, .rename-svg-cancel:hover{
+  cursor: pointer;
+  stroke-width: 3;
+}
+
+.file-input {
+  display: none;
+}
+
+span[ngClass='nav-link'], #download-file{
+  cursor: pointer;
+  color: #fff;
+}
+
+a{
+  color: white;
+}
+
+#direct-access-folder a:hover{
+  color: #ffe066;
+}
+
+/*a:hover{
+  color: white;
+}
+
+a:visited{
+  color: white;
+}*/
+
+.ng-line{
+  border: 1px solid white !important;
+  color: #fff;
+}
+
+.ng-line:hover{
+  /*background-color: #ffcc00 !important;*/
+  background-color: #b095d0 !important;
+}
+
+.bi-x-circle-fill:hover{
+ color: #dd4655;
+ cursor: pointer;
+}
+
+.bi-play-circle:hover{
+  color: #2d9063;
+  cursor: pointer;
+}
+
+.bi-download:hover{
+  color: #2576f8;
+  cursor: pointer;
+}
+
+svg:hover{
+  color: #ffcc00;
+}
+
+.icon-file-svg svg{
+  color: white;
+}
+
+.btn-copy-file, .btn-create-folder, .btn-back-to-parent{
+  display: inline-block; color: white; margin-left: 5px;
+}
+
+.btn-copy-file:hover, .btn-create-folder:hover, .btn-back-to-parent:hover{
+  display: inline-block; color: white; margin-left: 5px;
+  background-color: #ffcc00;
+}

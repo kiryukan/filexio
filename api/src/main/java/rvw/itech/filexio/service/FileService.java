@@ -1,0 +1,135 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package rvw.itech.filexio.service;
+import rvw.itech.filexio.utility.UtilityIOService;
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.tools.FileObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Service;
+import rvw.itech.filexio.exception.ObjectNotFoundException;
+import rvw.itech.filexio.model.File;
+import rvw.itech.filexio.model.FileType;
+import rvw.itech.filexio.model.User;
+import rvw.itech.filexio.repository.FileRepository;
+
+/**
+ *
+ * @author renj
+ */
+@Service
+public class FileService {
+    private final FileRepository fileRepository;
+    private UserService userService;
+    private FileTypeService fileTypeService;
+    private UtilityIOService utilityIOService;
+
+    @Autowired
+    public FileService(FileRepository fileRepository, UserService userService, FileTypeService fileTypeService, UtilityIOService utilityIOService) {
+        this.fileRepository = fileRepository;
+        this.userService = userService;
+        this.fileTypeService = fileTypeService;
+        this.utilityIOService = utilityIOService;
+    }
+    
+    public File getFileFromFileId(Long id){
+        //return this.fileRepository.findById(id).orElseThrow(()->new ObjectNotFoundException("Cannot find file "+id));
+        return this.fileRepository.getById(id);
+    }
+    
+    
+    public List<File> getFilesFromFolderId(Long id){
+        return this.fileRepository.getFilesFromFolderId(id);
+    }
+    
+    public List<File> findByParentFolder(Long id){
+        List<File> files = this.fileRepository.getFilesFromFolderId(id);
+        return files;
+    }
+    
+    public List<File> getFilesFromPath(String path){
+        return this.fileRepository.getFilesFromPath(path);
+    }
+    
+    public List<File> getFilesFromUserId(Long id){
+        return this.fileRepository.getFilesFromUserId(id);
+    }
+    
+    public File addFile(File file){
+        //System.out.println(file.getUser().getId());
+        User u = this.userService.getUser(file.getUser().getId());
+        FileType ft = this.fileTypeService.getFileTypeById(file.getFileType().getId());
+        file.setUser(u);
+        file.setFileType(ft);
+        if(ft.getId() == 1){
+            UtilityIOService.createFolder(file.getPath(), file.getName());
+        }
+        else{
+            File folder = this.fileRepository.getById(file.getParentFolder().getId());
+            folder.setFileSize(this.getFolderSize(file.getParentFolder().getId()));
+            this.fileRepository.save(folder);
+        }
+        return this.fileRepository.save(file);
+    }
+    /* Not tested */
+    public List<File> addMultipleFiles(ArrayList<File> files){
+        List<File> fileList = files;
+        for(int i=0; i<files.size(); i++){
+            fileList.add(files.get(i));
+        }
+        this.fileRepository.saveAll(fileList);
+        return fileList;
+    }
+    /* Not tested */
+    public File updateFile(File file){
+        return this.fileRepository.save(file);
+    }
+    /* Not tested */
+    public void deleteFile(Long id){
+        File file = this.fileRepository.getById(id);
+        System.out.println("path of file to delete: " + file.getPath() + file.getName());
+        String path = "C:/Users/kiryu/Desktop/Projets/Java/filexio-files/" + file.getPath() + file.getName();
+        java.io.File ioFile = new java.io.File(path);
+        System.out.println(file.getFileType().getId());
+        if(file.getFileType().getId() == 1){
+            UtilityIOService.deleteFolderRecursively(ioFile);
+        }
+        else{
+            UtilityIOService.deleteFile(ioFile);
+        }
+        System.out.println(path);
+        this.fileRepository.deleteById(id);
+    }
+    
+    public long getFolderSize(Long folderId){
+        return this.fileRepository.getFolderSize(folderId);
+    }
+    
+    public void setRecursiveFolderSize(Long folderId){
+        File folder = this.fileRepository.getById(folderId);
+        List<File> files = this.fileRepository.getFilesFromFolderId(folderId);
+        Long folderSize = 0L;
+        for(File file:files){
+            if(file.getFileType().getId() == 1){
+                setRecursiveFolderSize(file.getId());
+            }
+        }
+        folderSize = this.fileRepository.getFolderSize(folder.getId());
+        if(folderSize == null)folderSize=0L;
+        folder.setFileSize(folderSize);
+        this.fileRepository.save(folder);
+    }
+    
+    /* FOLDERS MANAGING */
+    public void createFolder(String actualPath, String newFolderName){
+        UtilityIOService.createFolder(actualPath, newFolderName);
+    }
+}

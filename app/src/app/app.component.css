@@ -1,0 +1,7 @@
+.content{
+  background-color: #e9e0ef;
+  margin-top: 50px;
+  padding:30px;
+  height: 1000px;
+  background-image: -webkit-linear-gradient(30deg, #ecdff1 50%, #e4c2f1 50%);
+}

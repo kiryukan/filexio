@@ -1,0 +1,193 @@
+<div class="dashboard-container">
+  <div class="dashboard-menu d-flex col-sm-10 offset-sm-1 justify-content-center" style="text-align: center;">
+    <ul class="col-sm-12">
+      <li>
+        <form [formGroup]="form" (ngSubmit)="submitFile()">
+          <div class="form-group">
+            <label for="file-upload" class="btn btn-lg btn-outline-success col-sm-3">
+              <span class="bi bi-upload">&nbsp;select file</span>
+            </label>
+            <input id="file-upload" class="file-input col-sm-3" (change)="onFileSelected($event)" type="file" #fileUpload>
+            <span class="h6 d-block">{{ selectedFile }}</span>
+          </div>
+          <div class="form-group">
+            <button class="btn btn-danger col-sm-3" [disabled]="selectedFile === ''">Upload</button>
+          </div>
+          <!-- Progress Bar -->
+          <div class="progress form-group" *ngIf="progress > 0">
+            <div class="progress-bar progress-bar-striped bg-warning" role="progressbar" [style.width.%]="progress"
+            attr.aria-valuenow="{{ progress }}"
+            aria-valuemin="0"
+            aria-valuemax="100">
+            {{ progress }}
+            </div>
+          </div>
+        </form>
+      </li>
+    </ul>
+  </div>
+  <div class="dashboard-content col-sm-10 offset-sm-1">
+    <table class="table" style="margin-top: 10px;">
+      <thead style="background-color: #984ff1; color:white;">
+        <tr>
+          <th style="width: 10%;" scope="col"></th>
+          <th style="width: 30%;" scope="col">Name</th>
+          <th style="width: 15%;" scope="col">Size (kBi)</th>
+          <th style="width: 15%;" scope="col">Creation Date</th>
+          <th style="width: 10%;" scope="col"><input type="checkbox">All</th>
+          <th style="width: 20%;" scope="col"><span class="bi bi-x-circle-fill"></span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr id="direct-access-folder">
+          <td colspan="7" style="padding-left: 25px;">
+            <span *ngFor="let folder of path; let i=index">
+              <a [routerLink]="[getUrl()]" (click)="directAccessFolder(i)">
+                <div *ngIf=" folder !== 'root' " [innerHTML]="sanitize(rightArrow)" style="display: inline-block;"></div>{{ folder }}
+              </a>
+            </span>
+          </td>
+        </tr>
+        <tr style="background-color: #AA8DCD;">
+          <td>
+            <button ngClass="nav-link btn btn-outline-light btn-back-to-parent" [routerLink]="[getUrl()]" (click)="backToParent()" style="display: inline-block;"><!--<img height="15px" alt="back to parent" title="back to parent" src="{{ arrow }}">-->
+              <svg width="25px" height="25px" viewBox="0 0 60 60"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 52.502 52.502">
+                <path style="fill: rgb(255,255,255)" d="M51.718,50.857l-1.341-2.252C40.075,31.295,25.975,32.357,22.524,32.917v13.642L0,23.995L22.524,1.644v13.43
+                  c0.115,0,0.229-0.001,0.344-0.001c12.517,0,18.294,5.264,18.542,5.496c13.781,11.465,10.839,27.554,10.808,27.715L51.718,50.857z
+                  M25.505,30.735c5.799,0,16.479,1.923,24.993,14.345c0.128-4.872-0.896-15.095-10.41-23.012c-0.099-0.088-5.935-5.364-18.533-4.975
+                  l-1.03,0.03V6.447L2.832,24.001l17.692,17.724V31.311l0.76-0.188C21.338,31.109,22.947,30.735,25.505,30.735z"/>
+              </svg>          
+            </button>
+          </td>
+          <td>
+            <button ngClass="nav-link btn btn-outline-light btn-create-folder" [routerLink]="[getUrl()]" (click)="modalGlobal.openCreateFolderForm()">
+              <svg width="25px" height="25px" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <path style="fill: rgb(255,255,255)" d="M53,42.5h-5v-5c0-0.553-0.448-1-1-1s-1,0.447-1,1v5h-5c-0.552,0-1,0.447-1,1s0.448,1,1,1h5v5c0,0.553,0.448,1,1,1
+                    s1-0.447,1-1v-5h5c0.552,0,1-0.447,1-1S53.552,42.5,53,42.5z"/>
+                  <path style="fill: rgb(255,255,255)" d="M26.525,10.5l-4.618-6.451L21.515,3.5H0v53h47c7.168,0,13-5.832,13-13v-33H26.525z M58,12.5v5H31.536l-3.579-5H58z
+                     M47,54.5c-6.065,0-11-4.935-11-11s4.935-11,11-11s11,4.935,11,11S53.065,54.5,47,54.5z M57.699,36.133
+                    c-0.209-0.303-0.428-0.6-0.661-0.884c-0.017-0.021-0.035-0.039-0.052-0.059c-0.223-0.268-0.458-0.523-0.701-0.771
+                    c-0.059-0.061-0.118-0.121-0.178-0.18c-0.26-0.255-0.528-0.502-0.808-0.735c-0.043-0.036-0.088-0.068-0.131-0.104
+                    c-0.254-0.206-0.516-0.401-0.785-0.587c-0.064-0.045-0.128-0.091-0.193-0.134c-0.303-0.202-0.614-0.392-0.934-0.568
+                    c-0.064-0.035-0.129-0.067-0.194-0.102c-0.288-0.152-0.582-0.294-0.882-0.426c-0.061-0.026-0.12-0.055-0.181-0.081
+                    c-0.34-0.142-0.687-0.269-1.041-0.382c-0.08-0.025-0.161-0.048-0.242-0.073c-0.329-0.098-0.663-0.186-1.003-0.258
+                    c-0.043-0.009-0.084-0.021-0.127-0.03c-0.371-0.075-0.75-0.13-1.132-0.173c-0.09-0.01-0.18-0.018-0.27-0.026
+                    C47.793,30.524,47.4,30.5,47,30.5c-7.168,0-13,5.832-13,13c0,0.399,0.025,0.792,0.06,1.183c0.008,0.091,0.017,0.181,0.027,0.271
+                    c0.043,0.382,0.098,0.76,0.173,1.131c0.009,0.044,0.021,0.086,0.03,0.129c0.072,0.339,0.16,0.672,0.258,1
+                    c0.024,0.082,0.048,0.163,0.073,0.244c0.113,0.353,0.239,0.699,0.381,1.038c0.026,0.063,0.056,0.124,0.083,0.186
+                    c0.13,0.297,0.271,0.589,0.422,0.874c0.035,0.067,0.068,0.134,0.105,0.2c0.176,0.319,0.365,0.628,0.566,0.93
+                    c0.045,0.067,0.091,0.132,0.137,0.198c0.185,0.266,0.378,0.526,0.581,0.777c0.037,0.046,0.072,0.093,0.109,0.138
+                    c0.232,0.279,0.477,0.546,0.731,0.804c0.061,0.062,0.123,0.122,0.185,0.183c0.246,0.241,0.5,0.474,0.765,0.695
+                    c0.022,0.018,0.042,0.038,0.064,0.056c0.283,0.233,0.579,0.451,0.881,0.66c0.072,0.05,0.144,0.099,0.217,0.147
+                    c0.077,0.051,0.151,0.105,0.229,0.155H2v-49h18.485l5,7h0.012l4.69,6.551c0.195,0.272,0.501,0.417,0.813,0.418V19.5h27v17.078
+                    c-0.049-0.078-0.104-0.153-0.155-0.23C57.797,36.276,57.748,36.204,57.699,36.133z"/>
+                </g>
+              </svg>                
+            </button>
+            <!-- Call folder creation modal -->
+            <app-modal #modalGlobal (reload)="emitUpdateView()"></app-modal>
+          </td>
+          <td colspan="3">
+            <button ngClass="nav-link btn btn-outline-light btn-copy-file" [routerLink]="[getUrl()]" (click)="copyFiles()" [disabled]="!thereIsSelectedFiles()">
+              <svg viewBox="0 0 64 64" width="25" height="25">
+              <g id="Text-files">
+                <path style="fill: rgb(255,255,255)" d="M53.9791489,9.1429005H50.010849c-0.0826988,0-0.1562004,0.0283995-0.2331009,0.0469999V5.0228   C49.7777481,2.253,47.4731483,0,44.6398468,0h-34.422596C7.3839517,0,5.0793519,2.253,5.0793519,5.0228v46.8432999   c0,2.7697983,2.3045998,5.0228004,5.1378999,5.0228004h6.0367002v2.2678986C16.253952,61.8274002,18.4702511,64,21.1954517,64   h32.783699c2.7252007,0,4.9414978-2.1725998,4.9414978-4.8432007V13.9861002   C58.9206467,11.3155003,56.7043495,9.1429005,53.9791489,9.1429005z M7.1110516,51.8661003V5.0228   c0-1.6487999,1.3938999-2.9909999,3.1062002-2.9909999h34.422596c1.7123032,0,3.1062012,1.3422,3.1062012,2.9909999v46.8432999   c0,1.6487999-1.393898,2.9911003-3.1062012,2.9911003h-34.422596C8.5049515,54.8572006,7.1110516,53.5149002,7.1110516,51.8661003z    M56.8888474,59.1567993c0,1.550602-1.3055,2.8115005-2.9096985,2.8115005h-32.783699   c-1.6042004,0-2.9097996-1.2608986-2.9097996-2.8115005v-2.2678986h26.3541946   c2.8333015,0,5.1379013-2.2530022,5.1379013-5.0228004V11.1275997c0.0769005,0.0186005,0.1504021,0.0469999,0.2331009,0.0469999   h3.9682999c1.6041985,0,2.9096985,1.2609005,2.9096985,2.8115005V59.1567993z"/>
+                <path style="fill: rgb(255,255,255)" d="M38.6031494,13.2063999H16.253952c-0.5615005,0-1.0159006,0.4542999-1.0159006,1.0158005   c0,0.5615997,0.4544001,1.0158997,1.0159006,1.0158997h22.3491974c0.5615005,0,1.0158997-0.4542999,1.0158997-1.0158997   C39.6190491,13.6606998,39.16465,13.2063999,38.6031494,13.2063999z"/>
+                <path style="fill: rgb(255,255,255)" d="M38.6031494,21.3334007H16.253952c-0.5615005,0-1.0159006,0.4542999-1.0159006,1.0157986   c0,0.5615005,0.4544001,1.0159016,1.0159006,1.0159016h22.3491974c0.5615005,0,1.0158997-0.454401,1.0158997-1.0159016   C39.6190491,21.7877007,39.16465,21.3334007,38.6031494,21.3334007z"/>
+                <path style="fill: rgb(255,255,255)" d="M38.6031494,29.4603004H16.253952c-0.5615005,0-1.0159006,0.4543991-1.0159006,1.0158997   s0.4544001,1.0158997,1.0159006,1.0158997h22.3491974c0.5615005,0,1.0158997-0.4543991,1.0158997-1.0158997   S39.16465,29.4603004,38.6031494,29.4603004z"/>
+                <path style="fill: rgb(255,255,255)" d="M28.4444485,37.5872993H16.253952c-0.5615005,0-1.0159006,0.4543991-1.0159006,1.0158997   s0.4544001,1.0158997,1.0159006,1.0158997h12.1904964c0.5615025,0,1.0158005-0.4543991,1.0158005-1.0158997   S29.0059509,37.5872993,28.4444485,37.5872993z"/>
+              </g>
+              </svg>
+            </button>
+            <button ngClass="nav-link btn btn-outline-light btn-copy-file" [routerLink]="[getUrl()]" (click)="cutFiles()" [disabled]="!thereIsSelectedFiles()">
+              <svg width="25px" height="25px" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill: rgb(255,255,255)" d="M 19.65625 4.3125 C 18.882813 4.40625 18.195313 4.953125 17.96875 5.75 L 15.3125 15.0625 L 11.96875 16.03125 C 11.730469 14.335938 10.257813 13 8.5 13 C 6.578125 13 5 14.578125 5 16.5 C 5 18.421875 6.578125 20 8.5 20 C 9.789063 20 10.925781 19.269531 11.53125 18.21875 L 14.65625 17.34375 L 13.78125 20.46875 C 12.730469 21.074219 12 22.210938 12 23.5 C 12 25.421875 13.578125 27 15.5 27 C 17.421875 27 19 25.421875 19 23.5 C 19 21.742188 17.664063 20.269531 15.96875 20.03125 L 20.4375 4.375 C 20.171875 4.300781 19.914063 4.28125 19.65625 4.3125 Z M 27.625 11.5625 L 18.90625 14.03125 L 18.25 16.3125 L 26.25 14.03125 C 27.3125 13.726563 27.929688 12.625 27.625 11.5625 Z M 8.5 15 C 9.339844 15 10 15.660156 10 16.5 C 10 17.339844 9.339844 18 8.5 18 C 7.660156 18 7 17.339844 7 16.5 C 7 15.660156 7.660156 15 8.5 15 Z M 15.5 22 C 16.339844 22 17 22.660156 17 23.5 C 17 24.339844 16.339844 25 15.5 25 C 14.660156 25 14 24.339844 14 23.5 C 14 22.660156 14.660156 22 15.5 22 Z"/></svg>
+            </button>
+            <button ngClass="nav-link btn btn-outline-light btn-copy-file" [routerLink]="[getUrl()]" (click)="pasteFiles()" [disabled]="!fileToCopyOrMove()">
+              <svg width="25px" height="25px" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+                <path style="fill: rgb(255,255,255)" d="M58.933,28.698l-5.19-5.996V9.854c0-3.044-2.477-5.521-5.521-5.521h-6.29V1c0-0.552-0.448-1-1-1H15.728
+                  c-0.552,0-1,0.448-1,1v3.333h-6.29c-3.044,0-5.521,2.477-5.521,5.521v41.894c0,3.044,2.477,5.521,5.521,5.521h12.098
+                  c0.917,2.798,3.549,4.826,6.649,4.826h24.993c3.859,0,6.999-3.14,6.999-6.999V29.353C59.177,29.112,59.091,28.88,58.933,28.698z
+                   M46.305,17.165l9.684,11.188h-4.685c-2.756,0-4.999-2.242-4.999-4.999V17.165z M16.728,2h23.204v5.572H16.728V2z M8.438,55.268
+                  c-1.941,0-3.521-1.58-3.521-3.521V9.854c0-1.941,1.58-3.521,3.521-3.521h6.29v2.24c0,0.552,0.448,1,1,1h25.204c0.552,0,1-0.448,1-1
+                  v-2.24h6.29c1.941,0,3.521,1.58,3.521,3.521v10.538l-5.682-6.564c-0.19-0.22-0.466-0.346-0.756-0.346h-18.12
+                  c-3.859,0-6.999,3.139-6.999,6.998v34.616c0,0.058,0.007,0.115,0.009,0.172H8.438z M52.178,60.094H27.185
+                  c-2.756,0-4.999-2.242-4.999-4.999V20.479c0-2.756,2.242-4.998,4.999-4.998h17.12v7.873c0,3.859,3.14,6.999,6.999,6.999h5.873
+                  v24.743C57.177,57.852,54.935,60.094,52.178,60.094z"/>
+                </svg>
+                
+            </button>
+          </td>
+          <td></td>
+        </tr>
+        <tr *ngFor="let file of files; let i=index" class="ng-line" [ngStyle]="{'background-color': selectedFiles[i] ? backgroundColor[1] : backgroundColor[0]}">
+          <td style="width: 10%;"><span class="span-link" [routerLink]="[getUrl()]" (click)="openItem(file.id)"><div class="icon-file-svg" [innerHTML]="sanitize(file.fileType.iconSvg)"></div></span></td>
+          <td style="width: 10%;"><span *ngIf="file.id !== renameSelectedId" class="span-link" [routerLink]="[getUrl()]" (click)="openItem(file.id)">{{ file.name }}</span>
+            <input id="input-rename" type="text" (keydown.enter)="renameValid(file.id)" [(ngModel)]="file.name" name="filename" *ngIf="file.id === renameSelectedId" value="{{file.name}}">
+            &nbsp;
+            <svg *ngIf="file.id !== renameSelectedId" (click)="renameLaunch(file.id)" class="rename-svg" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 426.854 426.854" width="15">
+              <path style="fill: rgb(255,255,255); " d="M380.044,2.321h-39.21L60.736,282.409L0,415.525l23.852,9.008l122.915-56.094L426.854,88.352v-39.22L380.044,2.321z
+                M134.409,344.396l229.46-229.46l8.302,8.302l-229.46,229.46L134.409,344.396z M124.509,334.496l-29.822-29.822l229.46-229.46
+                l29.822,29.822L124.509,334.496z M84.787,294.774l-8.309-8.308L305.943,57.009l8.304,8.304L84.787,294.774z M68.761,298.548
+                l61.867,61.868l-55.112,25.151L35.89,370.592L68.761,298.548z M23.344,409.376l-4.393-1.659l11.115-24.36l27.511,10.396
+                L23.344,409.376z M412.854,82.553l-30.784,30.784L315.843,47.11l30.79-30.788h27.612l38.609,38.61V82.553z"/>
+                <title id="renameIconTitle">Rename</title>
+            </svg>
+            <svg style="left:5px;" stroke-width="3" *ngIf="file.id === renameSelectedId" (click)="renameValid(file.id)" class="rename-svg-ok"  width="24px" height="24px" viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="okIconTitle" stroke="#198754" stroke-width="1" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#000000"> <title id="okIconTitle">Ok</title> <polyline points="4 13 9 18 20 7"/> </svg>
+            <svg style="left:5px" *ngIf="file.id === renameSelectedId" (click)="renameCancel(file.id)" class="rename-svg-cancel" width="15px" height="15px" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path class="rename-svg-ok" stroke="#dc3545" d="M6.7929 7.49998L1.14645 1.85353L1.85356 1.14642L7.50001 6.79287L13.1465 1.14642L13.8536 1.85353L8.20711 7.49998L13.8536 13.1464L13.1465 13.8535L7.50001 8.20708L1.85356 13.8535L1.14645 13.1464L6.7929 7.49998Z"/>
+              <title id="cancelIconTitle">Cancel</title>
+            </svg>              
+          </td>
+          <td style="width: 10%;"><span ngClass="nav-link" [routerLink]="[getUrl()]" style="display: inline-block">{{ file.fileSize }}</span></td>
+          <td style="width: 10%;"><span ngClass="nav-link" [routerLink]="[getUrl()]" style="display: inline-block">{{ file.validitySharing !== null && (file.validitySharing | date:"dd-MM-YYYY") }}</span></td>
+          <td style="width: 10%;"><span ngClass="nav-link" [routerLink]="[getUrl()]" style="display: inline-block"><input type="checkbox" class="form-check-input" style="background-color: #e4c2f1; color: #383838" (click)="selectFile(i)"></span></td>
+          <td style="width: 10%;">
+            <span (click)="deleteFile(file.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 256 256" xml:space="preserve">
+                <desc>Created with Fabric.js 1.7.22</desc>
+                <defs>
+                </defs>
+                <g transform="translate(128 128) scale(0.72 0.72)">
+                  <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05) scale(3.89 3.89)" >
+                  <path d="M 45 0 C 20.187 0 0 20.187 0 45 c 0 24.813 20.187 45 45 45 c 24.813 0 45 -20.187 45 -45 C 90 20.187 69.813 0 45 0 z M 64.328 58.672 c 1.563 1.562 1.563 4.095 0 5.656 c -0.78 0.781 -1.805 1.172 -2.828 1.172 s -2.048 -0.391 -2.828 -1.172 L 45 50.657 L 31.329 64.328 C 30.547 65.109 29.524 65.5 28.5 65.5 s -2.047 -0.391 -2.829 -1.172 c -1.562 -1.562 -1.562 -4.095 0 -5.656 L 39.343 45 L 25.671 31.329 c -1.562 -1.563 -1.562 -4.095 0 -5.657 c 1.563 -1.562 4.095 -1.562 5.657 0 L 45 39.343 l 13.672 -13.672 c 1.561 -1.562 4.096 -1.562 5.656 0 c 1.563 1.563 1.563 4.095 0 5.657 L 50.657 45 L 64.328 58.672 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                </g>
+                </g>
+                </svg>
+            </span>
+            &nbsp;
+            <span *ngIf="file.fileType.ext !== 'none'" (click)="playFile(file.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 256 256" xml:space="preserve">
+                <desc>Created with Fabric.js 1.7.22</desc>
+                <defs>
+                </defs>
+                <g transform="translate(128 128) scale(0.72 0.72)">
+                  <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05) scale(3.89 3.89)" >
+                  <path d="M 45 0 C 20.147 0 0 20.147 0 45 c 0 24.853 20.147 45 45 45 s 45 -20.147 45 -45 C 90 20.147 69.853 0 45 0 z M 62.251 46.633 L 37.789 60.756 c -1.258 0.726 -2.829 -0.181 -2.829 -1.633 V 30.877 c 0 -1.452 1.572 -2.36 2.829 -1.634 l 24.461 14.123 C 63.508 44.092 63.508 45.907 62.251 46.633 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                </g>
+                </g>
+                </svg>
+            </span>
+            &nbsp;
+            <span id="download-file" (click)="downloadFile(file.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="20" height="20" viewBox="0 0 256 256" xml:space="preserve">
+                <desc>Created with Fabric.js 1.7.22</desc>
+                <defs>
+                </defs>
+                <g transform="translate(128 128) scale(0.72 0.72)">
+                  <g style="stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: none; fill-rule: nonzero; opacity: 1;" transform="translate(-175.05 -175.05) scale(3.89 3.89)" >
+                  <path d="M 67.109 36.803 c -1.172 -1.172 -3.07 -1.171 -4.242 0 L 48 51.67 V 3 c 0 -1.657 -1.343 -3 -3 -3 c -1.657 0 -3 1.343 -3 3 v 48.67 L 27.133 36.803 c -1.171 -1.172 -3.071 -1.172 -4.242 0 c -1.172 1.171 -1.172 3.071 0 4.242 L 42.876 61.03 c 0.14 0.141 0.295 0.266 0.461 0.377 c 0.071 0.047 0.148 0.08 0.222 0.121 c 0.097 0.054 0.191 0.112 0.294 0.155 c 0.098 0.04 0.199 0.063 0.3 0.093 c 0.087 0.026 0.17 0.059 0.26 0.077 c 0.194 0.039 0.39 0.059 0.587 0.059 c 0.197 0 0.393 -0.021 0.587 -0.059 c 0.092 -0.018 0.178 -0.053 0.267 -0.079 c 0.098 -0.029 0.197 -0.051 0.292 -0.091 c 0.108 -0.045 0.206 -0.105 0.307 -0.162 c 0.069 -0.039 0.142 -0.069 0.208 -0.113 c 0.167 -0.111 0.322 -0.237 0.463 -0.379 l 19.984 -19.983 C 68.281 39.874 68.281 37.975 67.109 36.803 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                  <path d="M 45 90 C 20.187 90 0 69.813 0 45 C 0 26.412 11.681 9.498 29.067 2.913 c 1.549 -0.587 3.281 0.194 3.868 1.743 s -0.193 3.281 -1.743 3.868 C 16.124 14.231 6 28.89 6 45 c 0 21.505 17.495 39 39 39 s 39 -17.495 39 -39 c 0 -16.11 -10.124 -30.769 -25.191 -36.476 c -1.55 -0.587 -2.33 -2.319 -1.743 -3.868 c 0.586 -1.549 2.317 -2.329 3.868 -1.743 C 78.319 9.499 90 26.412 90 45 C 90 69.813 69.813 90 45 90 z" style="stroke: none; stroke-width: 1; stroke-dasharray: none; stroke-linecap: butt; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;" transform=" matrix(1 0 0 1 0 0) " stroke-linecap="round" />
+                </g>
+                </g>
+              </svg>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
