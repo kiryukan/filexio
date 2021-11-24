@@ -6,6 +6,7 @@
 package rvw.itech.filexio.service;
 import rvw.itech.filexio.utility.UtilityIOService;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -70,7 +71,7 @@ public class FileService {
         file.setUser(u);
         file.setFileType(ft);
         if(ft.getId() == 1){
-            UtilityIOService.createFolder(file.getPath(), file.getName());
+            this.utilityIOService.createFolder(file.getPath(), file.getName());
         }
         else{
             File folder = this.fileRepository.getById(file.getParentFolder().getId());
@@ -100,10 +101,10 @@ public class FileService {
         java.io.File ioFile = new java.io.File(path);
         System.out.println(file.getFileType().getId());
         if(file.getFileType().getId() == 1){
-            UtilityIOService.deleteFolderRecursively(ioFile);
+            this.utilityIOService.deleteFolderRecursively(ioFile);
         }
         else{
-            UtilityIOService.deleteFile(ioFile);
+            this.utilityIOService.deleteFile(ioFile);
         }
         System.out.println(path);
         this.fileRepository.deleteById(id);
@@ -130,6 +131,20 @@ public class FileService {
     
     /* FOLDERS MANAGING */
     public void createFolder(String actualPath, String newFolderName){
-        UtilityIOService.createFolder(actualPath, newFolderName);
+        this.utilityIOService.createFolder(actualPath, newFolderName);
+    }
+    
+    public File createNewRootFolderToSaveToDB(String Name, User user){
+        File file = new File();
+        file.setName(Name);
+        file.setUser(user);
+        FileType ft = this.fileTypeService.getFileTypeById(1L);
+        file.setFileType(ft);
+        file.setExt("none");
+        file.setFileSize(0L);
+        file.setIsRoot(true);
+        file.setValiditySharing(new Date());
+        File createdFile = this.fileRepository.save(file);
+        return createdFile;
     }
 }

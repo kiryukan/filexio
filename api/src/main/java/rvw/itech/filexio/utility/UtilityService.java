@@ -8,11 +8,13 @@ package rvw.itech.filexio.utility;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.Random;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author renj
  */
+@Service
 public class UtilityService {
     public UtilityService(){}
     

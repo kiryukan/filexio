@@ -6,7 +6,6 @@
 package rvw.itech.filexio.controller;
 
 import java.util.List;
-import javax.tools.FileObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import rvw.itech.filexio.model.File;
 import rvw.itech.filexio.model.FileType;
-import rvw.itech.filexio.service.FileService;
 import rvw.itech.filexio.service.FileTypeService;
 
 /**
@@ -28,7 +25,7 @@ import rvw.itech.filexio.service.FileTypeService;
  */
 @RestController
 @RequestMapping("/api/filetype")
-@CrossOrigin(origins="*")
+@CrossOrigin
 public class FileTypeController {
     @Autowired
     private FileTypeService fileTypeService;
@@ -41,8 +38,16 @@ public class FileTypeController {
         return new ResponseEntity<>(fileType, HttpStatus.OK);
     }
     
+    @CrossOrigin
     @GetMapping("/get/all")
     public ResponseEntity<List<FileType>> getAllFileTypes(){
+        List<FileType> fileTypes = this.fileTypeService.getAllFileTypes();
+        return new ResponseEntity<>(fileTypes, HttpStatus.OK);
+    }
+    
+    @CrossOrigin
+    @GetMapping("/get/all/distinct")
+    public ResponseEntity<List<FileType>> getAllFileTypesDistinct(){
         List<FileType> fileTypes = this.fileTypeService.getAllFileTypes();
         return new ResponseEntity<>(fileTypes, HttpStatus.OK);
     }

@@ -35,6 +35,17 @@ public class UtilityIOService {
         }
     }
     
+    public String createRootFolder(String rootFolderName){
+        File folder = new File(rootFolderName);
+        if(folder.mkdir()){
+            System.out.println("Root Folder " + rootFolderName +" successfully created");
+        }
+        else{
+            System.out.println("Error cannot create folder "+ rootFolderName);
+        }
+        return rootFolderName;
+    }
+    
     public static void deleteFolderRecursively(File ioFile){
         System.out.println("folder selected to delete" + ioFile.getName());
         File[] allContents = ioFile.listFiles();

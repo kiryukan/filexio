@@ -74,5 +74,4 @@ public class JWTUtility implements Serializable {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
 
-
 }

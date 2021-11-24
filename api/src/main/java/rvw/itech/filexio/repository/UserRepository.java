@@ -21,6 +21,7 @@ import rvw.itech.filexio.model.User;
  */
 public interface UserRepository extends JpaRepository<User, Long>{
 
+    @Query(value="SELECT u.* FROM User u WHERE u.username = ?1", nativeQuery = true)
     User findByUsername(String username);
     
     @Query(value="SELECT u FROM User u WHERE u.username = ?1")
@@ -28,10 +29,11 @@ public interface UserRepository extends JpaRepository<User, Long>{
     
     @Query(value="SELECT u FROM User u WHERE u.email = ?1")
     User findUserWithEmail(String email);
-    //@Query(value="SELECT u FROM User u WHERE u.username = ?username", nativeQuery = true)
-    //Optional<User> findUserWithName(String username);
     
-    /*@Query(" select u from User u " +
-        " where u.username = ?1")
-    Optional<User> findUserWithName(String username);*/
+    @Query(value="SELECT u.* FROM User u WHERE u.username = ?1 OR u.email = ?1", nativeQuery = true)
+    User findUserByCredentials(String usernameOrEmail);
+    
+    @Query(value="SELECT u.* FROM User u WHERE u.username = ?1 AND u.password = ?2", nativeQuery = true)
+    User getUserByUsernameAndPassword(String username, String password);
+
 }

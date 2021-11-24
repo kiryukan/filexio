@@ -45,17 +45,19 @@ public class HomeController {
     
     @PostMapping("/authenticate")
     public JwtResponse createAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
+        UserDetails userDetails = userService.findUserByCredentials(jwtRequest.getUsername());
         try{
+            jwtRequest.setUsername(userDetails.getUsername());
             authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        jwtRequest.getUsername(), 
+                        jwtRequest.getUsername(),
                         jwtRequest.getPassword())
             );
         }catch(BadCredentialsException e){
             throw new Exception("INVALID_CREDENTIALS", e);
         }
         System.out.println("request username " + jwtRequest.getUsername());
-        final UserDetails userDetails = userService.loadUserByUsername(jwtRequest.getUsername());
+        
         final String jwtToken = jwtTokenUtil.generateToken(userDetails);
         
         return new JwtResponse(jwtToken);

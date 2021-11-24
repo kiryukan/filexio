@@ -46,6 +46,25 @@ CREATE TABLE IF NOT EXISTS `file` (
   KEY `FKinph5hu8ryc97hbs75ym9sm7t` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `file`
+--
+
+INSERT INTO `file` (`id`, `ext`, `file_size`, `is_root`, `name`, `path`, `shared_uri`, `validity_sharing`, `file_type_id`, `parent_folder_id`, `user_id`) VALUES
+(1, 'none', 3558990389, b'1', 'kiryukan-AU7kXvsx', NULL, NULL, '2030-10-01', 1, NULL, 2),
+(116, 'none', 2026368626, b'0', 'test', 'kiryukan-AU7kXvsx/', '', '2021-11-06', 1, 1, 2),
+(129, 'none', 5989, b'0', 'test3', 'kiryukan-AU7kXvsx/test/', '', '2021-11-06', 1, 116, 2),
+(130, 'mp3', 3722179, b'0', 'matatomiedocomplete.mp3', 'kiryukan-AU7kXvsx/test/musique/', '', '2021-11-06', 2, 145, 2),
+(131, 'wav', 61928600, b'0', '02 - dhwesha-sthoopa.wav', 'kiryukan-AU7kXvsx/test/musique/', '', '2021-11-06', 24, 145, 2),
+(136, 'none', 1532621763, b'0', 'monJoliDossier', 'kiryukan-AU7kXvsx/', '', '2021-11-08', 1, 1, 2),
+(139, 'mkv', 1960705126, b'0', '01.mkv', 'kiryukan-AU7kXvsx/test/videos/', '', '2021-11-08', 14, 144, 2),
+(141, 'png', 6732, b'0', 'folder3.png', 'kiryukan-AU7kXvsx/test/images/', NULL, NULL, 6, 146, 2),
+(143, 'png', 5989, b'0', 'folder4.png', 'kiryukan-AU7kXvsx/test/test3/', '', '2021-11-13', 6, 129, 2),
+(144, 'none', 1960705126, b'0', 'videos', 'kiryukan-AU7kXvsx/test/', '', '2021-11-13', 1, 116, 2),
+(145, 'none', 65650779, b'0', 'musique', 'kiryukan-AU7kXvsx/test/', '', '2021-11-13', 1, 116, 2),
+(146, 'none', 6732, b'0', 'images', 'kiryukan-AU7kXvsx/test/', '', '2021-11-14', 1, 116, 2),
+(150, 'mkv', 1532621763, b'0', 'Mystère a Saint-Tropez.mkv', 'kiryukan-AU7kXvsx/monJoliDossier/', '', '2021-11-15', 14, 136, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +203,15 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`id`),
   KEY `FKn82ha3ccdebhokx3a8fgdqeyy` (`role_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `user`
+--
+
+INSERT INTO `user` (`id`, `available_disk_space`, `email`, `last_connection`, `password`, `root_folder_name`, `used_disk_space`, `username`, `role_id`) VALUES
+(2, 100000, 'kiryukan07@hotmail.com', '2021-10-18', '$2a$10$BF4ZYyan9ohkNxc8ILYRYeXpkm.vG4CQEsYo3LV/fi8NIEXpvKubK', 'kiryukan-AU7kXvsx', NULL, 'kiryukan', 3),
+(3, 100000, 'renjvw@gmail.com', '2021-10-18', '$2a$10$Bm56EtnxiftC/7HMx7qE4ubO1gNcmlhbwnzhEl9RCkfq8Wx9Yp7eW', 'renj-JQauKcvk', NULL, 'renj', 1),
+(23, 100000, 'kiryukan08@hotmail.com', '2021-10-19', '$2a$10$oYvgjSabn6lJA5XZ8UprQuGa1mL6vQjs9U6z.mj1I4fHaiFKfujoy', 'kiryukan08-PfNQvGtJ', NULL, 'kiryukan08', 3);
 
 --
 -- Contraintes pour les tables déchargées

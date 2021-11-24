@@ -21,6 +21,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import org.springframework.beans.factory.annotation.Value;
 import rvw.itech.filexio.utility.UtilityIOService;
 import rvw.itech.filexio.utility.UtilityService;
 
@@ -63,7 +64,7 @@ public class User implements Serializable/*, UserDetails*/{
         this.password = password;
         this.role = role;
         this.lastConnection = lastConnection;
-        this.createFolder("");
+        //this.createFolder("");
         this.availableDiskSpace = availableDiskSpace;
         this.usedDiskSpace = usedDiskSpace;
     }
@@ -171,17 +172,19 @@ public class User implements Serializable/*, UserDetails*/{
     
     /*** USER ROOTFOLDER CREATING METHOD ***/
 
-    private String createUserFolderName() {
+    /*private String createUserFolderName() {
         String appendice = "0123456789ACEFGHJKLMNPQRUVWXYabcdefhijkprstuvwx";
         return UtilityService.generateRootFolderName(8, new SecureRandom(), appendice);
     }
     
+    
     public void createFolder(String baseUserPath){
         String append = this.createUserFolderName();
         this.rootFolderName = this.username + "-" + append;
-        UtilityIOService.createFolder(baseUserPath, this.rootFolderName);
-    }
-
+        System.out.println("root folder name: "+this.rootFolderName);
+        UtilityIOService utilityIOService = new UtilityIOService();
+        utilityIOService.createRootFolder(this.rootFolderName);
+    }*/
 
     /*@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

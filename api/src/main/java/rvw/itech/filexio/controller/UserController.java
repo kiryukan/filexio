@@ -55,18 +55,6 @@ public class UserController {
     @Autowired
     private JWTUtility jwtTokenUtil;
     
-    /*@GetMapping("/")
-    @CrossOrigin(origins="*")
-    public String test(){
-        return "This is homepage!";
-    }
-    
-    @GetMapping("/test2")
-    @CrossOrigin(origins="*")
-    public String testAuth(){
-        return "This is authenticated test page!";
-    }*/
-    
     @GetMapping("/get/all")
     public ResponseEntity<List<User>> getAllUsers(){
         List<User> users = userService.getAllUsers();
@@ -94,25 +82,6 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
     
-    /*@PostMapping("/authenticate")
-    public JwtResponse createAuthenticationToken(@RequestBody JwtRequest jwtRequest) throws Exception {
-        try{
-            authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        jwtRequest.getUsername(), 
-                        jwtRequest.getPassword())
-            );
-        }catch(BadCredentialsException e){
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-        System.out.println("request username " + jwtRequest.getUsername());
-        final UserDetails userDetails = userService.loadUserByUsername(jwtRequest.getUsername());
-        final String jwtToken = jwtTokenUtil.generateToken(userDetails);
-        
-        return new JwtResponse(jwtToken);
-    }*/
-    
-    
     @PostMapping("/add")
     public ResponseEntity<?> addUser(@RequestBody User u){
         if(this.userService.userUsernameNotAlreadyExist(u.getUsername())){
@@ -121,6 +90,8 @@ public class UserController {
                 Role r = roleService.getById(3L);
                 u.setRole(r);
                 User user = userService.addUser(u);
+                File file =this.fileService.createNewRootFolderToSaveToDB(user.getRootFolderName(), user);
+                file.setUser(user); this.fileService.addFile(file);
                 return new ResponseEntity<>(user, HttpStatus.CREATED);
             }
             else{
@@ -138,6 +109,7 @@ public class UserController {
     }
     
     @PutMapping("/update")
+    @CrossOrigin
     public ResponseEntity<User> updateUser(@RequestBody User u){
         User user = userService.updateUser(u);
         return new ResponseEntity<>(user, HttpStatus.CREATED);
@@ -167,5 +139,12 @@ public class UserController {
         this.fileService.setRecursiveFolderSize(folderId); // VERIFY ALL FOLDERS SIZES
         List<File> files = this.fileService.findByParentFolder(folderId);
         return new ResponseEntity<>(files, HttpStatus.OK);
+    }
+    
+    @PostMapping("/check-password")
+    public ResponseEntity<User> getUserFromNameAndPassword(@RequestBody JwtRequest jwtRequest) throws Exception {
+        System.out.println("username: "+jwtRequest.getUsername());
+        User user = this.userService.getUserByUsernameAndPassword(jwtRequest.getUsername(), jwtRequest.getPassword());
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
