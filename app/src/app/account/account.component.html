@@ -1,0 +1,29 @@
+<div class="account-container">
+    <div class="col-sm-10 offset-sm-1"><h3 class="title-principal">Account Informations</h3></div>
+    <div class="account-content col-sm-10 offset-sm-1">
+        <div class="left-panel col-sm-6">
+            <form #updateUserForm="ngForm" id="update-form" (ngSubmit)="onSubmit(updateUserForm)">
+                <div class="form-group">
+                    <label><h5>Username</h5></label>
+                    <input type="text" class="form-control" name="username" value="{{ user.username }}"><br>
+                    <label><h5>Email</h5></label>
+                    <input class="form-control" type="text" name="email" value="{{ user.email }}">
+                    <br>
+                    <br>
+                    <input type="button" name="change-password" class="btn change-password" (click)="modalGlobal.openChangePasswordForm()" value="Change password">
+                </div>
+                
+                <app-modal #modalGlobal></app-modal>
+            </form>
+        </div>
+        <div class="right-panel col-sm-6">
+            <label><h5>Account type</h5></label>
+            <input class="form-control" value="{{ user.role.nom }}" [disabled]="true"><br>
+            <label><h5>Description</h5></label>
+            <input class="form-control" value="{{ user.role.description }}" [disabled]="true">
+            <br>
+            <br>
+            <input type="submit" class="btn btn-danger" form="update-form" value="Save">
+        </div>
+    </div>
+</div>

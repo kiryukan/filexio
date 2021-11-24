@@ -10,10 +10,10 @@ import { SharingService } from './sharing.service';
 export class FileTypeService {
   fileTypes: FileType[] = [];
 
-  constructor( private http: HttpClient/*, private sharingService: SharingService*/ ) {}
+  constructor( private http: HttpClient, private sharingService: SharingService ) {}
 
   getAllFileTypes(){
-    /*const httpOptions = this.sharingService.getHttpOptions();
-    this.http.get<FileType[]>(`${environment.baseUrl}/api/get/fileTypes`,httpOptions);*/
+    const httpOptions = this.sharingService.getHttpOptions();
+    return this.http.get<FileType[]>(`${environment.baseUrl}/api/filetype/get/all`,httpOptions);
   }
 }

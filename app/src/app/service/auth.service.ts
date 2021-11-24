@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JsonObject } from 'node_modules/type-fest';
+import { nextTick } from 'process';
 import { Observable } from 'rxjs';
 import { Credentials } from '../model/credentials.model';
 import { Role } from '../model/role.model';
 import { User } from '../model/user.model';
 import { Globals } from './globals';
+import { SharingService } from './sharing.service';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -18,23 +20,12 @@ export class AuthService {
 
   constructor(private http: HttpClient, private userService: UserService) { }
 
-  // auth
-  /*public authenticate(credential: Credentials):Observable<string>{
-    return this.http.post<string>('http://localhost:3009/authenticate', credential);
-  }*/
-
   public authenticate(credential: Credentials, callback: Function){
     this.http.post<string>('http://localhost:3009/authenticate', credential).subscribe(
       (tokenResp) => {
         const token = JSON.parse(JSON.stringify(tokenResp))["jwtToken"];
         console.log(token);
         this.setToken(token);
-        /*const httpOptions = {
-          'headers': new HttpHeaders({
-            'Content-Type':  'application/json',
-            'Authorization': 'Bearer '+token
-          })
-        };*/
         const httpOptions = {
           'headers': new HttpHeaders().set(
             'Content-Type',  'application/json').set(
@@ -90,8 +81,10 @@ export class AuthService {
       username: (user as any).username,
       email: (user as any).email,
       password: '',
+      rootFolderName: '',
       role: (user as any).role,
-      lastConnection: ''
+      lastConnection: '',
+      usedDiskSpace: 0
     }
     this.user = userData;
     this.isAuthentified = true;
@@ -119,21 +112,36 @@ export class AuthService {
     })
   }*/
 
+  public findUserByNameAndPassword(credential: Credentials, next: Function){
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        Authorization: 'Bearer '+ this.getToken()
+      })
+    };
+    this.http.post<User>('http://localhost:3009/api/user/check-password', credential, httpOptions).subscribe(
+      (user) => {
+        next(user);
+      });
+  }
+
   public isAuth(){
     return this.isAuthentified;
   }
 
   public disconnect(){
     this.isAuthentified = false;
-    let role: Role = {id:0, name:'', description:''};
+    let role: Role = {id:0, nom:'', description:''};
 
     const userData = {
       id: 0 as any,
       username: '' as any,
       email: '' as any,
       password: '',
+      rootFolderName: '',
       role: role as any,
-      lastConnection: ''
+      lastConnection: '',
+      usedDiskSpace: 0
     }
     this.user = userData;
   }

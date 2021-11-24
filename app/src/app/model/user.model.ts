@@ -5,5 +5,7 @@ export interface User{
   email: string;
   password: string;
   role: Role;
+  rootFolderName: string,
   lastConnection: string;
+  usedDiskSpace: number;
 }

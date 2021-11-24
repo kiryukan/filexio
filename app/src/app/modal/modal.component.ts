@@ -4,7 +4,6 @@ import { NgbModal } from 'node_modules/@ng-bootstrap/ng-bootstrap';
 import { SigninFormComponent } from '../form/signin-form/signin-form.component';
 import { SignupFormComponent } from '../form/signup-form/signup-form.component';
 import { AuthService } from '../service/auth.service';
-import { SignInComponent } from './sign-in/sign-in.component';
 
 @Component({
   selector: 'app-modal',
@@ -16,6 +15,7 @@ export class ModalComponent implements OnInit {
   isToSign:   boolean = false;
   isToCreate: boolean = false;
   isAuth:     boolean = false;
+  changePassword: boolean = false;
   toCreateFolder: boolean = false;
   closeResult: string = '';
   modalName: any;
@@ -24,6 +24,7 @@ export class ModalComponent implements OnInit {
   @Output() dUsername: EventEmitter<any> = new EventEmitter();
   @Input() reloadData: any;
   @Output() reload: EventEmitter<any> = new EventEmitter();
+  @Input() msg: any;
   @ViewChild('mymodal', { static: true }) input!: ElementRef;
   @ViewChild('signin', { static: true }) signinForm!: SigninFormComponent;
   @ViewChild('signup', { static: true }) signupForm!: SignupFormComponent;
@@ -31,30 +32,45 @@ export class ModalComponent implements OnInit {
 
   constructor(private modalService: NgbModal) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   openModalSignInForm(){
+    this.msg = "";
     this.modalName = "Sign in";
     this.isToSign = true;
     this.isToCreate = false;
     this.toCreateFolder = false;
+    this.changePassword = false;
     this.open(this.input);
   }
 
   openModalSignUpForm(){
+    this.msg = "";
     this.modalName = "Create new account";
     this.isToSign = false;
     this.isToCreate = true;
     this.toCreateFolder = false;
+    this.changePassword = false;
+    this.open(this.input);
+  }
+
+  openChangePasswordForm(){
+    this.msg = "";
+    this.modalName = "Change password";
+    this.isToSign = false;
+    this.isToCreate = false;
+    this.toCreateFolder = false;
+    this.changePassword = true;
     this.open(this.input);
   }
 
   openCreateFolderForm(){
+    this.msg = "";
     this.modalName = "Create new folder";
     this.isToSign = false;
     this.isToCreate = false;
     this.toCreateFolder = true;
+    this.changePassword = false;
     this.open(this.input);
   }
   
@@ -64,6 +80,10 @@ export class ModalComponent implements OnInit {
     this.dataUsername = data;
     this.dUsername.emit(data);
     this.closeModalSignUp();
+  }
+
+  emitPasswordChanged(data: any){
+    this.msg = data;
   }
 
   emitClose(data: any){
@@ -97,6 +117,9 @@ export class ModalComponent implements OnInit {
     this.reload.emit(data);
   }
 
+  displayMsg(data: any){
+    this.msg = data;
+  }
   /*onSubmit(){
   }*/
 }

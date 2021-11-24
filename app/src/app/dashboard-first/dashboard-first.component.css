@@ -1,0 +1,110 @@
+/*.dashboard-container{
+    background-color: rgba(0,0,0,0);
+  }*/
+  
+  .dashboard-content{
+    margin-bottom: 50px;
+    border-radius: 20px;
+    padding: 30px;
+    /*background-color: rgb(105, 57, 163, 0.7);*/
+    background-color: rgb(242, 242, 242, 0.3);
+    margin-top: 100px;
+    width: 40%;
+    display: inline-block;
+  }
+  
+  
+  .bi{
+    margin-left: 10px;
+  }
+  
+  .dashboard-menu{
+    margin-top: 10px;
+    /*background-color: white;
+    padding: 10px;
+    border: 5px solid #D8D8D8;
+    border-radius: 20px;*/
+  }
+  
+  .dashboard-menu ul{
+    list-style-type: none;
+    font-size: 1.5em;;
+  }
+  
+  /* upload button styling */
+  input[type="file"] {
+    display: none;
+  }
+  .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    background-color: #F5E9BB;
+    border-radius: 10px;
+    box-shadow: 3px 3px 3px #ccc;
+  }
+  
+  tbody{
+    background-color: rgb(105, 57, 163, 0.7);
+    color: #fff;
+    opacity: 0.9;
+  }
+  
+  .file-input {
+    display: none;
+  }
+  
+  span[ngClass='nav-link']{
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  a{
+    color: white;
+  }
+  
+  #direct-access-folder a:hover{
+    color: #ffe066;
+  }
+  
+  /*a:hover{
+    color: white;
+  }
+  
+  a:visited{
+    color: white;
+  }*/
+  
+  .ng-line{
+    border: 1px solid white !important;
+    color: #fff;
+  }
+  
+  .ng-line:hover{
+    /*background-color: #ffcc00 !important;*/
+    background-color: #b095d0 !important;
+  }
+  
+  .bi-x-circle-fill:hover{
+   color: #dd4655;
+   cursor: pointer;
+  }
+  
+  .bi-play-circle:hover{
+    color: #2d9063;
+    cursor: pointer;
+  }
+  
+  .bi-download:hover{
+    color: #2576f8;
+    cursor: pointer;
+  }
+  
+  svg:hover{
+    color: #ffcc00;
+  }
+  
+  .icon-file-svg svg{
+    color: white;
+  }

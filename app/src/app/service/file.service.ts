@@ -77,6 +77,7 @@ export class FileService {
     this.http.get<File[]>(`${environment.baseUrl}/api/user/`+ this.user.id +'/files', httpOptions).subscribe((files)=>{
       this.files = files;
       //this.setCurrentFolder(this.getRootFolder());
+      //if(this.actualFolder === undefined){this.setCurrentFolder(this.getRootFolder());}
       console.log(this.actualFolder);
       console.log(this.files);
       //return this.files;

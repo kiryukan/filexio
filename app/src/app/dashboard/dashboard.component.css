@@ -3,13 +3,12 @@
 }
 
 .dashboard-content{
-  margin-bottom: 50px;
+  /*margin-bottom: 50px;*/
   border-radius: 20px;
   padding: 30px;
-  /*background-color: rgb(105, 57, 163, 0.7);*/
-  background-color: rgb(242, 242, 242, 0.3);
+  /*background-color: rgb(105, 57, 163, 0.7);
+  background-color: rgb(242, 242, 242, 0.3);*/
 }
-
 
 .bi{
   margin-left: 10px;
@@ -17,10 +16,6 @@
 
 .dashboard-menu{
   margin-top: 10px;
-  /*background-color: white;
-  padding: 10px;
-  border: 5px solid #D8D8D8;
-  border-radius: 20px;*/
 }
 
 .dashboard-menu ul{
@@ -32,6 +27,7 @@
 input[type="file"] {
   display: none;
 }
+
 .custom-file-upload {
   border: 1px solid #ccc;
   display: inline-block;
@@ -42,10 +38,22 @@ input[type="file"] {
   box-shadow: 3px 3px 3px #ccc;
 }
 
+.table{
+  border-collapse: unset !important;
+  border-spacing: 0;
+  border: 14px solid #39094c;
+  border-radius: 10px;
+}
+
 tbody{
-  background-color: rgb(105, 57, 163, 0.7);
+  /*background-color: rgb(105, 57, 163, 0.7);*/
   color: #fff;
   opacity: 0.9;
+}
+
+td{
+  border-color: inherit;
+  border-style: unset;
 }
 
 /* rename pointer change for link, svg */
@@ -69,7 +77,7 @@ tbody{
   display: none;
 }
 
-span[ngClass='nav-link'], #download-file{
+span[ngClass='nav-link'], #download-file, .back-to-parent-line{
   cursor: pointer;
   color: #fff;
 }
@@ -91,7 +99,7 @@ a:visited{
 }*/
 
 .ng-line{
-  border: 1px solid white !important;
+  /*border: 1px solid white !important;*/
   color: #fff;
 }
 

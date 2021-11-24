@@ -5,6 +5,7 @@ import {Router, NavigationEnd,ActivatedRoute} from '@angular/router';
 import { SharingService } from '../service/sharing.service';
 import { AuthService } from '../service/auth.service';
 import { UserService } from '../service/user.service';
+//import { AppModal } from '../modal/modal.component';
 
 @Component({
   selector: 'app-navbar',

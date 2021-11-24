@@ -38,10 +38,11 @@ export class DashboardComponent implements OnInit {
   selectedFile: string = "";
   form: FormGroup;
   progress: number = 0;
+  testComponent:string = "";
 
   renameSelectedId: number = 0;  
 
-  constructor(private http: HttpClient, private router: Router, private fileService: FileService,  public fb: FormBuilder, private sanitizer: DomSanitizer) {
+  constructor(private router: Router, private fileService: FileService,  public fb: FormBuilder, private sanitizer: DomSanitizer) {
     this.form = this.fb.group({
       file: [null]
     }) // manage upload progress
@@ -53,6 +54,7 @@ export class DashboardComponent implements OnInit {
         //this.setCurrentFolder(); // ### - Share to global fileService
         this.actualFolder = this.fileService.getActualFolder();
         this.files = this.fileService.getFilesInFolder(this.actualFolder.id);
+        console.log("files in dashboard: " + this.files);
         this.path = this.fileService.getCompletePath();
         this.setBackgroundSelectedColor();
         console.log(this.actualFolder);

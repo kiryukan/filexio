@@ -1,3 +1,4 @@
+<!-- UPLOAD PART BEGINS HERE -->
 <div class="dashboard-container">
   <div class="dashboard-menu d-flex col-sm-10 offset-sm-1 justify-content-center" style="text-align: center;">
     <ul class="col-sm-12">
@@ -8,6 +9,7 @@
               <span class="bi bi-upload">&nbsp;select file</span>
             </label>
             <input id="file-upload" class="file-input col-sm-3" (change)="onFileSelected($event)" type="file" #fileUpload>
+            <span class="h6 d-block" *ngIf="!selectedFile">max allowed size: 5mb</span>
             <span class="h6 d-block">{{ selectedFile }}</span>
           </div>
           <div class="form-group">
@@ -26,20 +28,26 @@
       </li>
     </ul>
   </div>
-  <div class="dashboard-content col-sm-10 offset-sm-1">
-    <table class="table" style="margin-top: 10px;">
+<!-- UPLOAD PART ENDS HERE -->
+<!-- _______________________________________________________________________________ -->
+
+
+  <!-- FILES TABLE BEGINS HERE -->
+<div class="dashboard-content col-sm-10 offset-sm-1">
+  <table class="table" style="margin-top: 10px;">
       <thead style="background-color: #984ff1; color:white;">
         <tr>
           <th style="width: 10%;" scope="col"></th>
           <th style="width: 30%;" scope="col">Name</th>
-          <th style="width: 15%;" scope="col">Size (kBi)</th>
+          <th style="width: 15%;" scope="col">Size (KiB)</th>
           <th style="width: 15%;" scope="col">Creation Date</th>
           <th style="width: 10%;" scope="col"><input type="checkbox">All</th>
           <th style="width: 20%;" scope="col"><span class="bi bi-x-circle-fill"></span></th>
         </tr>
       </thead>
       <tbody>
-        <tr id="direct-access-folder">
+        <!-- EDITIONS ICONS -->
+        <tr id="direct-access-folder" style="background-color: #5f0a95;">
           <td colspan="7" style="padding-left: 25px;">
             <span *ngFor="let folder of path; let i=index">
               <a [routerLink]="[getUrl()]" (click)="directAccessFolder(i)">
@@ -48,7 +56,7 @@
             </span>
           </td>
         </tr>
-        <tr style="background-color: #AA8DCD;">
+        <tr style="background-color: #5f0a95;">
           <td>
             <button ngClass="nav-link btn btn-outline-light btn-back-to-parent" [routerLink]="[getUrl()]" (click)="backToParent()" style="display: inline-block;"><!--<img height="15px" alt="back to parent" title="back to parent" src="{{ arrow }}">-->
               <svg width="25px" height="25px" viewBox="0 0 60 60"version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -122,6 +130,14 @@
           </td>
           <td></td>
         </tr>
+        <!-- PARENT RETURN LINE -->
+        <tr class="ng-line back-to-parent-line" (click)="backToParent()" style="background-color: rgba(105, 57, 163, 0.7);">
+          <td></td>
+          <td style="width: 10%;" [routerLink]="[getUrl()]">
+            <span class="span-link" >..</span></td>
+          <td colspan="5"></td>
+        </tr>
+        <!-- FILES LIST STARTS HERE -->
         <tr *ngFor="let file of files; let i=index" class="ng-line" [ngStyle]="{'background-color': selectedFiles[i] ? backgroundColor[1] : backgroundColor[0]}">
           <td style="width: 10%;"><span class="span-link" [routerLink]="[getUrl()]" (click)="openItem(file.id)"><div class="icon-file-svg" [innerHTML]="sanitize(file.fileType.iconSvg)"></div></span></td>
           <td style="width: 10%;"><span *ngIf="file.id !== renameSelectedId" class="span-link" [routerLink]="[getUrl()]" (click)="openItem(file.id)">{{ file.name }}</span>
@@ -186,6 +202,9 @@
               </svg>
             </span>
           </td>
+        </tr>
+        <tr class="ng-line back-to-parent-line" style="background-color: rgba(105, 57, 163, 0.7);">
+          <td colspan="7" style="text-align:center;" *ngIf="files.length === 0">FOLDER IS EMPTY!</td>
         </tr>
       </tbody>
     </table>

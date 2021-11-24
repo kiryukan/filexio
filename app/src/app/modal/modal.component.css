@@ -1,6 +1,8 @@
 .modal-header, .modal-body, .modal-footer{
-    background-color: #ecdff1;
-    color: #984ff1;
+    /*background-color: #ecdff1;
+    color: #984ff1;*/
+    background-color: #a46edb;
+    color: #fff;
   }
   
   #username, #password {
@@ -9,9 +11,12 @@
   }
   
   .close-btn{
-    background-color: #984ff1;
-    color: #ecdff1;
+    /*background-color: #984ff1;
+    color: #ecdff1;*/
+    background-color: #ffcc00;
+    color: #885ab7;
     padding: 3px 10px 3px 10px;
     border: none;
+    border-radius: 3px;
   }
   

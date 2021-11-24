@@ -83,7 +83,10 @@
       <ul class="navbar-nav">
         <!--<li routerLinkActive="active"><a ngClass="nav-link { 'active':getUrl() === '/home' }" aria-current="page" routerLink="/home"><span class="bi bi-house-fill">&nbsp;</span>Home</a></li>-->
         <li routerLinkActive="active" *ngIf="isAuth"><a ngClass="nav-link { 'active':getUrl() === 'dashboard' }" routerLink="/dashboard"><span class="bi bi-speedometer">&nbsp;</span>Dashboard</a></li>
-        <li routerLinkActive="active" *ngIf="isAuth"><a ngClass="nav-link { 'active':getUrl() === 'upgrade' }" routerLink="#">Upgrade</a></li>
+        <li routerLinkActive="active" *ngIf="isAuth"><a ngClass="nav-link { 'active':getUrl() === '/stats' }" aria-current="page" routerLink="/stats"><span class="bi bi-bar-chart">&nbsp;</span>Stats</a></li>
+        <li routerLinkActive="active" *ngIf="isAuth"><a ngClass="nav-link { 'active':getUrl() === '/account' }" aria-current="page" routerLink="/account"><span class="bi bi-person-circle">&nbsp;</span>Account</a></li>
+        <li routerLinkActive="active"><a ngClass="nav-link { 'active':getUrl() === '/about' }" aria-current="page" routerLink="/about"><span class="bi bi-question-circle">&nbsp;</span>About</a></li>
+        <!--<li routerLinkActive="active" *ngIf="isAuth"><a ngClass="nav-link { 'active':getUrl() === 'upgrade' }" routerLink="#">Upgrade</a></li>-->
       </ul>
     </div>
     <div class="form-inline">
@@ -93,15 +96,12 @@
           <ng-template #usernameBlock>{{ dUsername }}</ng-template>
         </a>
         <ul ngbDropdownMenu class="dropdown-menu" aria-labelledby="first-level-link">
-          <!--<li *ngIf="!isAuth"><a class="dropdown-item" [routerLink]="[getUrl()]" (click)="modalSignIn.openModalSignIn()">Login</a></li>
-          <li *ngIf="!isAuth"><a class="dropdown-item" [routerLink]="[getUrl()]" (click)="createModal.openModalSignUp()">Sign-up</a></li>-->
-          <li *ngIf="!isAuth"><a class="dropdown-item" [routerLink]="[getUrl()]" (click)="modalGlobal.openModalSignInForm()">Login</a></li>
-          <li *ngIf="!isAuth"><a class="dropdown-item" [routerLink]="[getUrl()]" (click)="modalGlobal.openModalSignUpForm()">Sign-up</a></li>
-          <li *ngIf="isAuth"><a class="dropdown-item" routerLink="/account">Account</a></li>
-          <li *ngIf="isAuth"><a class="dropdown-item" routerLink="/" (click)="disconnect()">Logout</a></li>
+          <li *ngIf="!isAuth" class="dropdown-list-item"><a class="dropdown-item" [routerLink]="[getUrl()]" (click)="modalGlobal.openModalSignInForm()">Login</a></li>
+          <li *ngIf="!isAuth" class="dropdown-list-item"><a class="dropdown-item" [routerLink]="[getUrl()]" (click)="modalGlobal.openModalSignUpForm()">Sign-up</a></li>
+          <li *ngIf="isAuth" class="dropdown-list-item"><a class="dropdown-item" routerLink="/account">Account</a></li>
+          <li *ngIf="isAuth" class="dropdown-list-item"><a class="dropdown-item" routerLink="/" (click)="disconnect()">Logout</a></li>
         </ul>
-        <!--<app-sign-in #modalSignIn (dataUsername)="emitUsername($event)" ></app-sign-in>6
-        <app-create-account #createModal></app-create-account>-->
+        <!-- GLOBAL MODAL -->
         <app-modal #modalGlobal (dUsername)="emitUsername($event)"></app-modal>
       </div>
     </div>

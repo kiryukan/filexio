@@ -30,4 +30,8 @@ export class UserService {
   public addUser(user: User):Observable<User>{
     return this.http.post<User>('http://localhost:3009/api/user/add', user);
   }
+
+  public updateUser(user: User, httpOptions: any):Observable<any>{
+    return this.http.put<any>('http://localhost:3009/api/user/update', user, httpOptions);
+  }
 }

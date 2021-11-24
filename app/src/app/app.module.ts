@@ -6,6 +6,7 @@ import { AppRoutingModule } from './route/app.routing.module';
 import {APP_BASE_HREF} from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ChartsModule } from 'ng2-charts';
 /* Components */
 import { AppComponent } from './app.component';
 import { UserComponent } from './user/user.component';
@@ -15,8 +16,6 @@ import { HomeComponent } from './home/home.component';
 /* Services */
 import { UserService } from './service/user.service';
 import { AuthService } from './service/auth.service';
-import { CreateAccountComponent } from './modal/create-account/create-account.component';
-import { SignInComponent } from './modal/sign-in/sign-in.component';
 import { SharingService } from './service/sharing.service';
 import { ModalComponent } from './modal/modal.component';
 import { SigninFormComponent } from './form/signin-form/signin-form.component';
@@ -25,6 +24,12 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './service/auth-guard.service';
 import { CreateFolderFormComponent } from './form/create-folder-form/create-folder-form.component';
 import { SocialBarComponent } from './social-bar/social-bar.component';
+import { StatsComponent } from './stats/stats.component';
+import { AccountComponent } from './account/account.component';
+import { StreamComponent } from './stream/stream.component';
+import { AboutComponent } from './about/about.component';
+import { DoughnutChartComponent } from './chart/doughnut-chart/doughnut-chart.component';
+import { ModifyPasswordComponent } from './form/modify-password/modify-password.component';
 
 
 
@@ -35,14 +40,18 @@ import { SocialBarComponent } from './social-bar/social-bar.component';
     DashboardComponent,
     NavbarComponent,
     HomeComponent,
-    CreateAccountComponent,
-    SignInComponent,
     ModalComponent,
     SigninFormComponent,
     SignupFormComponent,
     NotFoundComponent,
     CreateFolderFormComponent,
-    SocialBarComponent
+    SocialBarComponent,
+    StatsComponent,
+    AccountComponent,
+    StreamComponent,
+    AboutComponent,
+    DoughnutChartComponent,
+    ModifyPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +59,8 @@ import { SocialBarComponent } from './social-bar/social-bar.component';
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [
     AuthService,
