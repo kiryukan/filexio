@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,13 +29,17 @@ public class FileType implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name="type")
     private String type;
+    @Column(name="ext")
     private String ext;
+    @Column(name="icon_thin")
     @Type(type="text")
     private String iconThin;
-        @Type(type="text")
+    @Column(name="icone_filled")
+    @Type(type="text")
     private String iconFilled;
-    
+    @Column(name="icon_svg")
     @Type(type="text")
     private String iconSvg;
     

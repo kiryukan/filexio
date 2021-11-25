@@ -13,6 +13,7 @@ import java.util.ArrayList;
 //import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -35,11 +36,17 @@ public class User implements Serializable/*, UserDetails*/{
     
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name="username")
     private String username;
+    @Column(name="email")
     private String email;
+    @Column(name="password")
     private String password;
+    @Column(name="root_folder_name")
     private String rootFolderName;
+    @Column(name="used_disk_space")
     private Long usedDiskSpace;
+    @Column(name="available_disk_space")
     private Long availableDiskSpace;
     
     
