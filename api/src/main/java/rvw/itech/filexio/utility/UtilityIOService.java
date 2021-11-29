@@ -23,10 +23,8 @@ public class UtilityIOService {
     
     public UtilityIOService(){}
     
-    public static void createFolder(String baseUserUri, String folderName){
-        UtilityIOService utilityIOService = new UtilityIOService();
-        String basePath = utilityIOService.getBasePath();
-        File folder = new File(basePath + "/" + baseUserUri + folderName);
+    public void createFolder(String baseUserUri, String folderName){
+        File folder = new File(this.basePath + "/" + baseUserUri + folderName);
         if(folder.mkdir()){
             System.out.println("Folder " + baseUserUri + "/" + folderName +" successfully created");
         }
@@ -46,26 +44,29 @@ public class UtilityIOService {
         return rootFolderName;
     }
     
-    public static void deleteFolderRecursively(File ioFile){
+
+    public void deleteFolderRecursively(String pathUri, boolean isCompletePath){
+        String fullPath = "";
+        if(!isCompletePath){
+            fullPath = this.basePath + pathUri;
+        }
+        else{
+            fullPath = pathUri;
+        }
+        java.io.File ioFile = new java.io.File(fullPath);
         System.out.println("folder selected to delete" + ioFile.getName());
         File[] allContents = ioFile.listFiles();
         if (allContents != null) {
             for (File file : allContents) {
-                deleteFolderRecursively(file);
+                deleteFolderRecursively(file.getAbsolutePath(), true);
             }
         }
         ioFile.delete();
     }
-    
-    public static void deleteFile(File ioFile){
+
+    public void deleteFile(String pathUri){
+        String fullPath = this.basePath + pathUri;
+        java.io.File ioFile = new java.io.File(fullPath);
         ioFile.delete();
     }
-    
-    public String getBasePath(){
-        return this.basePath;
-    }
-    /*public static void deleteFile(String baseUserUri, String folderName){
-        File file = new File(baseUserUri + "/" + folderName);
-        file.delete();
-    }*/
 }

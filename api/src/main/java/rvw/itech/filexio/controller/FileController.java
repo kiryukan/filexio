@@ -6,17 +6,11 @@
 package rvw.itech.filexio.controller;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.tools.FileObject;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -149,23 +143,6 @@ public class FileController {
         return new ResponseEntity<>(newRenamedFile, HttpStatus.OK);
     }
     
-    /*@GetMapping("/download/{id}")
-    public ResponseEntity<File> downloadFileById(@PathVariable("id") Long id) throws IOException{
-        File file = this.fileService.getFileFromFileId(id);
-        System.out.println("download path: "+this.filesSystemStorageService.getFileUrl(file.getPath(), file.getName()));
-        try {
-            FileUtils.copyURLToFile(
-                    new URL("file:///" + this.filesSystemStorageService.getFileUrl(file.getPath(), file.getName())),
-                    new java.io.File(file.getName()),
-                    10000,
-                    10000
-            );
-            
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(FileController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return new ResponseEntity<>(file, HttpStatus.OK);
-    }*/
     
     @GetMapping("download/{fileId}")
     @ResponseBody

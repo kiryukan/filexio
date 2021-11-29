@@ -8,15 +8,8 @@ import rvw.itech.filexio.utility.UtilityIOService;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.tools.FileObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
-import rvw.itech.filexio.exception.ObjectNotFoundException;
 import rvw.itech.filexio.model.File;
 import rvw.itech.filexio.model.FileType;
 import rvw.itech.filexio.model.User;
@@ -71,13 +64,20 @@ public class FileService {
         file.setUser(u);
         file.setFileType(ft);
         if(ft.getId() == 1){
+	    System.out.println("Create physical folder");
             this.utilityIOService.createFolder(file.getPath(), file.getName());
         }
         else{
+	    //System.out.println("Record parent size folder in db");
             File folder = this.fileRepository.getById(file.getParentFolder().getId());
             folder.setFileSize(this.getFolderSize(file.getParentFolder().getId()));
             this.fileRepository.save(folder);
         }
+	//System.out.println("File to save to string: "+file.toString());
+        return this.fileRepository.save(file);
+    }
+
+    public File save(File file){
         return this.fileRepository.save(file);
     }
     /* Not tested */
@@ -97,16 +97,17 @@ public class FileService {
     public void deleteFile(Long id){
         File file = this.fileRepository.getById(id);
         System.out.println("path of file to delete: " + file.getPath() + file.getName());
-        String path = "C:/Users/kiryu/Desktop/Projets/Java/filexio-files/" + file.getPath() + file.getName();
-        java.io.File ioFile = new java.io.File(path);
+        //String path = "C:/Users/kiryu/Desktop/Projets/Java/filexio-files/" + file.getPath() + file.getName();
+        //java.io.File ioFile = new java.io.File(path);
+	    String pathUri =  file.getPath() + file.getName();
         System.out.println(file.getFileType().getId());
         if(file.getFileType().getId() == 1){
-            this.utilityIOService.deleteFolderRecursively(ioFile);
+            this.utilityIOService.deleteFolderRecursively(pathUri, false);
         }
         else{
-            this.utilityIOService.deleteFile(ioFile);
+            this.utilityIOService.deleteFile(pathUri);
         }
-        System.out.println(path);
+        System.out.println(pathUri);
         this.fileRepository.deleteById(id);
     }
     

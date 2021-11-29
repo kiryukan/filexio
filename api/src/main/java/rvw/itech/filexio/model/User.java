@@ -7,23 +7,18 @@ package rvw.itech.filexio.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.ArrayList;
 //import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import org.springframework.beans.factory.annotation.Value;
-import rvw.itech.filexio.utility.UtilityIOService;
-import rvw.itech.filexio.utility.UtilityService;
 
 /**
  *
@@ -35,11 +30,17 @@ public class User implements Serializable/*, UserDetails*/{
     
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    //@Column(name="username")
     private String username;
+    //@Column(name="email")
     private String email;
+    //@Column(name="password")
     private String password;
+    //@Column(name="root_folder_name")
     private String rootFolderName;
+    //@Column(name="used_disk_space")
     private Long usedDiskSpace;
+    //@Column(name="available_disk_space")
     private Long availableDiskSpace;
     
     
@@ -122,7 +123,6 @@ public class User implements Serializable/*, UserDetails*/{
     public Long getAvailableDiskSpace() {
         return availableDiskSpace;
     }
-
     
     
     /*** SETTERS ***/
@@ -167,59 +167,13 @@ public class User implements Serializable/*, UserDetails*/{
     public void setAvailableDiskSpace(Long availableDiskSpace) {
         this.availableDiskSpace = availableDiskSpace;
     }
-    
-    
-    
-    /*** USER ROOTFOLDER CREATING METHOD ***/
 
-    /*private String createUserFolderName() {
-        String appendice = "0123456789ACEFGHJKLMNPQRUVWXYabcdefhijkprstuvwx";
-        return UtilityService.generateRootFolderName(8, new SecureRandom(), appendice);
+    public void addFile(File file){
+        this.files.add(file);
     }
-    
-    
-    public void createFolder(String baseUserPath){
-        String append = this.createUserFolderName();
-        this.rootFolderName = this.username + "-" + append;
-        System.out.println("root folder name: "+this.rootFolderName);
-        UtilityIOService utilityIOService = new UtilityIOService();
-        utilityIOService.createRootFolder(this.rootFolderName);
-    }*/
-
-    /*@Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return Collections.singleton(new SimpleGrantedAuthority("ADMIN"));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-        return true;
-    }*/
 
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", username=" + username + ", email=" + email + ", password=" + password + ", rootFolderName=" + rootFolderName + ", usedDiskSpace=" + usedDiskSpace + ", availableDiskSpace=" + availableDiskSpace + ", role=" + role + ", lastConnection=" + lastConnection + ", files=" + files + '}';
-    }
-
-    
+    }    
 }

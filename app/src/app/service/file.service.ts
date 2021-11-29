@@ -219,6 +219,7 @@ export class FileService {
     console.log(this.actualFolder.name);
     this.constructPath(this.actualFolder.id);
     let path = this.completePathForDatas.join('');
+    console.log("complete path create file: "+path);
     let user = this.authService.getUser();
     
     user.id = this.authService.getUser().id;
@@ -266,25 +267,31 @@ export class FileService {
   uploadFile(formData: FormData): Observable<any>{
     if(this.actualFolder.isRoot === false){
       formData.append('path', this.getCompletePathToString(true));
-      //console.log("path name: " + formData.getAll('path'));
+      console.log("path name: " + formData.getAll('path'));
     }
     else
     {
       formData.append('path', this.actualFolder.name);
-      //console.log("path name: " + formData.getAll('path'));
+      console.log("path name: " + formData.getAll('path'));
     }
 
     formData.append('userId', this.user.id.toString());
-    //console.log("upload userId: " + this.user.id.toString());
+    console.log("upload userId: " + this.user.id.toString());
     formData.append('parentId', this.actualFolder.id.toString());
-    //console.log("upload parent folder: " + this.actualFolder.id.toString());
-  
+    console.log("upload parent folder: " + this.actualFolder.id.toString()); 
     let token = this.authService.getToken();
-    return this.http.post(`${environment.baseUrl}/api/upload/file`, formData, {
+    /*return this.http.post(`${environment.baseUrl}/api/upload/file`, formData, {
       reportProgress: true,
       observe: 'events',
       headers: new HttpHeaders({
-          Authorization: 'Bearer '+token,
+        Authorization: 'Bearer '+token,
+      })
+    })*/
+    return this.http.post<any>(`${environment.baseUrl}/api/upload/file`, formData, {
+      reportProgress: true,
+      observe: 'events',
+      headers: new HttpHeaders({
+        Authorization: 'Bearer '+token,
       })
     })
   }

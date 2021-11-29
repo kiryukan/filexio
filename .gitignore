@@ -4,3 +4,7 @@ api/README.md
 api/filexio2.sql
 api/request.txt
 api/sql_filexio.txt
+api/src/main/resources/application.properties
+api/src/main/resources/schema.sql
+app/src/environments/environment.ts
+app/src/environments/environment.prod.ts

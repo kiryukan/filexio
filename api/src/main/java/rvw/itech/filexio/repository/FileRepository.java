@@ -17,17 +17,17 @@ import rvw.itech.filexio.model.File;
  */
 public interface FileRepository extends JpaRepository<File, Long>{
     
-    @Query(value="SELECT * FROM File f WHERE f.parent_folder_id = ?1", nativeQuery = true)
+    @Query(value="SELECT f FROM File f WHERE f.parentFolder.id = ?1")
     List<File> getFilesFromFolderId(Long id);
     
     List<File> findByParentFolder(Long id);
     
-    @Query(value="SELECT * FROM File f WHERE file.path = ?1", nativeQuery = true)
+    @Query(value="SELECT f FROM File f WHERE f.path = ?1")
     List<File> getFilesFromPath(String path);
     
-    @Query(value="SELECT * FROM File f WHERE f.user_id = ?1", nativeQuery = true)
+    @Query(value="SELECT f FROM File f WHERE f.user.id = ?1")
     List<File> getFilesFromUserId(Long id);
     
-    @Query(value="SELECT SUM(f.file_size) FROM File f WHERE f.parent_folder_id = ?1", nativeQuery = true)
+    @Query(value="SELECT SUM(f.fileSize) FROM File f WHERE f.parentFolder.id = ?1")
     Long getFolderSize(Long id);
 }

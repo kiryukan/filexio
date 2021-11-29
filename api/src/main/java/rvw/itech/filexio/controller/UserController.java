@@ -1,16 +1,11 @@
 package rvw.itech.filexio.controller;
-
-
 import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,7 +19,6 @@ import rvw.itech.filexio.service.UserService;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import rvw.itech.filexio.model.File;
 import rvw.itech.filexio.model.JwtRequest;
-import rvw.itech.filexio.model.JwtResponse;
 import rvw.itech.filexio.model.Role;
 import rvw.itech.filexio.service.FileService;
 import rvw.itech.filexio.security.JWTUtility;

@@ -33,13 +33,13 @@ public class FileType implements Serializable{
     private String type;
     @Column(name="ext")
     private String ext;
-    @Column(name="icon_thin")
+    //@Column(name="icon_thin")
     @Type(type="text")
     private String iconThin;
-    @Column(name="icone_filled")
+    //@Column(name="icon_filled")
     @Type(type="text")
     private String iconFilled;
-    @Column(name="icon_svg")
+    //@Column(name="icon_svg")
     @Type(type="text")
     private String iconSvg;
     
@@ -113,10 +113,6 @@ public class FileType implements Serializable{
 
     @Override
     public String toString() {
-        return "FileType{" + "id=" + id + ", type=" + type + ", ext=" + ext + ", iconThin=" + iconThin + ", iconFilled=" + iconFilled + ", files=" + files + '}';
+        return "FileType{" + "id=" + id + ", type=" + type + ", ext=" + ext + ", iconThin=" + iconThin + ", iconFilled=" + iconFilled + ", iconSvg=" + iconSvg + ", files=" + files + '}';
     }
-
-
-    
-    
 }

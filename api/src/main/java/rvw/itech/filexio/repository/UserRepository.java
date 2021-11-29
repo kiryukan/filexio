@@ -5,12 +5,6 @@
  */
 package rvw.itech.filexio.repository;
 
-import java.util.List;
-import java.util.Optional;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import rvw.itech.filexio.model.User;
@@ -21,7 +15,7 @@ import rvw.itech.filexio.model.User;
  */
 public interface UserRepository extends JpaRepository<User, Long>{
 
-    @Query(value="SELECT u.* FROM User u WHERE u.username = ?1", nativeQuery = true)
+    @Query(value="SELECT u FROM User u WHERE u.username = ?1")
     User findByUsername(String username);
     
     @Query(value="SELECT u FROM User u WHERE u.username = ?1")
@@ -30,10 +24,10 @@ public interface UserRepository extends JpaRepository<User, Long>{
     @Query(value="SELECT u FROM User u WHERE u.email = ?1")
     User findUserWithEmail(String email);
     
-    @Query(value="SELECT u.* FROM User u WHERE u.username = ?1 OR u.email = ?1", nativeQuery = true)
+    @Query(value="SELECT u FROM User u WHERE u.username = ?1 OR u.email = ?1")
     User findUserByCredentials(String usernameOrEmail);
     
-    @Query(value="SELECT u.* FROM User u WHERE u.username = ?1 AND u.password = ?2", nativeQuery = true)
+    @Query(value="SELECT u FROM User u WHERE u.username = ?1 AND u.password = ?2")
     User getUserByUsernameAndPassword(String username, String password);
 
 }

@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
   testComponent:string = "";
 
   renameSelectedId: number = 0;  
+  formData = new FormData();
 
   constructor(private router: Router, private fileService: FileService,  public fb: FormBuilder, private sanitizer: DomSanitizer) {
     this.form = this.fb.group({
@@ -200,10 +201,10 @@ export class DashboardComponent implements OnInit {
 
   // ### 2 - UPLOAD FILE
   submitFile(){
-    let formData = new FormData();
+    this.formData = new FormData();
     const f = this.form.value.file;
-    formData.append('file', f);
-    this.fileService.uploadFile(formData).subscribe((event: HttpEvent<any>)=>{
+    this.formData.append('file', f);
+    this.fileService.uploadFile(this.formData).subscribe((event: HttpEvent<any>)=>{
       switch (event.type) {
         case HttpEventType.Sent:
           console.log('Request has been made!');
@@ -219,9 +220,8 @@ export class DashboardComponent implements OnInit {
           console.log('User successfully created!', event.body);
           setTimeout(() => {
             this.progress = 0;
-          }, 1500)
+          })
       }
-      formData = new FormData();
       this.reload(); // reload dashboard state
       this.selectedFile = ""; // reinit file selection
     })

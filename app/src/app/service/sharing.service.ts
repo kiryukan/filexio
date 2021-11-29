@@ -22,12 +22,13 @@ export class SharingService {
 
     getUploadHttpOptions(){
         let token = this.authService.getToken();
-        const httpOptions = {
+        return {
+            reportProgress: true,
+            observe: 'events',
             headers: new HttpHeaders({
                 Authorization: 'Bearer '+token,
             })
         };
-        return httpOptions;
     }
 
     getDownloadHttpOptions(){

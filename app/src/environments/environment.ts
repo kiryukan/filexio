@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl: 'http://localhost:3009'
+  baseUrl: 'http://api.filexio.renjvw.fr'
 };
 
 /*

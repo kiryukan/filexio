@@ -9,6 +9,7 @@ import { User } from '../model/user.model';
 import { Globals } from './globals';
 import { SharingService } from './sharing.service';
 import { UserService } from './user.service';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,7 @@ export class AuthService {
   constructor(private http: HttpClient, private userService: UserService) { }
 
   public authenticate(credential: Credentials, callback: Function){
-    this.http.post<string>('http://localhost:3009/authenticate', credential).subscribe(
+    this.http.post<string>(`${environment.baseUrl}/authenticate`, credential).subscribe(
       (tokenResp) => {
         const token = JSON.parse(JSON.stringify(tokenResp))["jwtToken"];
         console.log(token);
@@ -119,7 +120,7 @@ export class AuthService {
         Authorization: 'Bearer '+ this.getToken()
       })
     };
-    this.http.post<User>('http://localhost:3009/api/user/check-password', credential, httpOptions).subscribe(
+    this.http.post<User>(`${environment.baseUrl}/api/user/check-password`, credential, httpOptions).subscribe(
       (user) => {
         next(user);
       });

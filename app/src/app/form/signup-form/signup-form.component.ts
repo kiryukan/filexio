@@ -71,7 +71,6 @@ export class SignupFormComponent implements OnInit {
         (user:User)=>{
           console.log(user);
           this.dataUsername.emit(data.value.username);
-          this.closeModalSignUp();
           this.authService.authenticate(data.value, (result:any) => {
             if(result){
               this.dataUsername.emit(result);
